@@ -5,6 +5,7 @@
 // npm libraries
 const assert = require('chai').assert
 const sinon = require('sinon')
+const BCHJS = require('@psf/bch-js')
 
 // Mocking data libraries.
 const mockData = require('./mocks/get-pubkey-mocks')
@@ -26,6 +27,18 @@ describe('#get-pubkey.js', () => {
 
   // Restore the sandbox before each test.
   afterEach(() => sandbox.restore())
+
+  describe('#constructor', () => {
+    it('should accept bch-js passed as a config option', () => {
+      const config = {
+        bchjs: new BCHJS()
+      }
+
+      uut = new GetPubKeyLib(config)
+
+      assert.property(uut.bchjs, 'restURL')
+    })
+  })
 
   describe('#queryBlockchain', () => {
     it('should throw error if address is not a string', async () => {
