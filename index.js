@@ -9,8 +9,8 @@
 
 const BCHJS = require('@psf/bch-js')
 
-const Util = require('./lib/util')
-const util = new Util()
+// Load the component libraries.
+const GetPubKey = require('./lib/get-pubkey')
 
 let _this // local global for 'this'.
 
@@ -19,7 +19,13 @@ class BoilplateLib {
     _this = this
 
     _this.bchjs = new BCHJS()
-    _this.util = util
+
+    // Create config object to pass to component libraries.
+    const config = {
+      bchjs: _this.bchjs
+    }
+
+    _this.getPubKey = new GetPubKey(config)
   }
 }
 
