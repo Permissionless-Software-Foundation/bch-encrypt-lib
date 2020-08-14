@@ -3,24 +3,28 @@
 */
 
 // npm libraries
-const chai = require('chai')
+const assert = require('chai').assert
 const sinon = require('sinon')
-
-// Locally global variables.
-const assert = chai.assert
 
 // Mocking data libraries.
 const mockData = require('./mocks/get-pubkey-mocks')
 
 // Unit under test
 const GetPubKeyLib = require('../../lib/get-pubkey')
-const uut = new GetPubKeyLib()
+let uut
 
 describe('#get-pubkey.js', () => {
   let sandbox
 
+  beforeEach(() => {
+    // Create a new sandbox before each test case.
+    sandbox = sinon.createSandbox()
+
+    // Re-instantiate the uut before each test.
+    uut = new GetPubKeyLib()
+  })
+
   // Restore the sandbox before each test.
-  beforeEach(() => (sandbox = sinon.createSandbox()))
   afterEach(() => sandbox.restore())
 
   describe('#queryBlockchain', () => {
@@ -35,11 +39,13 @@ describe('#get-pubkey.js', () => {
         assert.include(err.message, 'Address must be a string')
       }
     })
+
     it('should return false if public key could not be found on the blockchain', async () => {
       // Mock external dependencies.
       sandbox
         .stub(uut.bchjs.encryption, 'getPubKey')
         .resolves({ success: false })
+
       const addr = 'bitcoincash:qp3sn6vlwz28ntmf3wmyra7jqttfx7z6zgtkygjhc7'
 
       const pubkey = await uut.queryBlockchain(addr)
