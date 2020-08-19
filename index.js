@@ -1,6 +1,7 @@
 /*
-  An npm JavaScript library for front end web apps. Implements a minimal
-  Bitcoin Cash wallet.
+  An npm JavaScript library for front end web apps, compiled with Browserify.
+  Targeted for message.fullstack.cash. Allows e2e encryption using Bitcoin
+  Cash addresses.
 */
 
 /* eslint-disable no-async-promise-executor */
@@ -11,10 +12,11 @@ const BCHJS = require('@psf/bch-js')
 
 // Load the component libraries.
 const GetPubKey = require('./lib/get-pubkey')
+const Encryption = require('./lib/encryption')
 
 let _this // local global for 'this'.
 
-class BoilplateLib {
+class BchEncryption {
   constructor () {
     _this = this
 
@@ -26,7 +28,8 @@ class BoilplateLib {
     }
 
     _this.getPubKey = new GetPubKey(config)
+    _this.encryption = new Encryption()
   }
 }
 
-module.exports = BoilplateLib
+module.exports = BchEncryption
