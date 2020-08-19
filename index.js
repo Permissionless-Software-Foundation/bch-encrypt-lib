@@ -8,7 +8,7 @@
 
 'use strict'
 
-const BCHJS = require('@psf/bch-js')
+// const BCHJS = require('@psf/bch-js')
 
 // Load the component libraries.
 const GetPubKey = require('./lib/get-pubkey')
@@ -17,7 +17,7 @@ const Encryption = require('./lib/encryption')
 let _this // local global for 'this'.
 
 class BchEncryption {
-  constructor () {
+  constructor (BCHJS) {
     _this = this
 
     _this.bchjs = new BCHJS()

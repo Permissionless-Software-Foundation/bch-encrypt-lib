@@ -21,8 +21,12 @@ describe('#get-pubkey.js', () => {
     // Create a new sandbox before each test case.
     sandbox = sinon.createSandbox()
 
+    const config = {
+      bchjs: new BCHJS()
+    }
+
     // Re-instantiate the uut before each test.
-    uut = new GetPubKeyLib()
+    uut = new GetPubKeyLib(config)
   })
 
   // Restore the sandbox before each test.
