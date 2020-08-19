@@ -1,5 +1,5 @@
 /*
-  Unit tests for the get-pubkey.js  library.
+  Unit tests for the encryption.js  library.
 */
 
 // npm libraries
@@ -45,27 +45,25 @@ describe('#encryption.js', () => {
         assert.include(err.message, 'file must be a hex string')
       }
     })
+
     it('should return a hex string representing the encrypted file', async () => {
-      try {
-        const pubkey = '025af6595415c8cc3c8b3f28c4614b281131f5370622699087322fcb91511c0a17'
+      const pubkey =
+        '025af6595415c8cc3c8b3f28c4614b281131f5370622699087322fcb91511c0a17'
 
-        const filePath = `${__dirname}/encryption.js`
-        const fileBuff = await fs.readFileSync(filePath)
-        const fileHex = fileBuff.toString('hex')
-        originalFileHex = fileHex
+      const filePath = `${__dirname}/encryption.unit.js`
+      const fileBuff = await fs.readFileSync(filePath)
+      const fileHex = fileBuff.toString('hex')
+      originalFileHex = fileHex
 
-        const result = await uut.encryptFile(pubkey, fileHex)
-        encryptedFileHex = result
+      const result = await uut.encryptFile(pubkey, fileHex)
+      encryptedFileHex = result
 
-        assert.isString(result)
-        assert.notEqual(
-          fileHex,
-          result,
-          'Expected to be different to the original file'
-        )
-      } catch (err) {
-        assert.equal(true, false, 'unexpected result')
-      }
+      assert.isString(result)
+      assert.notEqual(
+        fileHex,
+        result,
+        'Expected to be different to the original file'
+      )
     })
   })
 
@@ -81,6 +79,7 @@ describe('#encryption.js', () => {
         assert.include(err.message, 'privKey must be a string')
       }
     })
+
     it('should throw error if privKey is not a WIF format', async () => {
       try {
         const privKey = 'wrong format'
@@ -105,6 +104,7 @@ describe('#encryption.js', () => {
         assert.include(err.message, 'encryptedFile must be a hex string')
       }
     })
+
     it('should return a hex string representing the decrypted file', async () => {
       try {
         const privKey = 'L5jmhgcC1BabZPvRQ6Bn1BRQoe9N5vPkNXMKAEo2DCS9fAtpDA2H'
