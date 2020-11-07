@@ -42,6 +42,17 @@ describe('#get-pubkey.js', () => {
 
       assert.property(uut.bchjs, 'restURL')
     })
+
+    it('should throw an error if not passed a bch-js instance', () => {
+      try {
+        const testUut = new GetPubKeyLib()
+
+        assert.fail('Unexpected result')
+        console.log('testUut: ', testUut)
+      } catch (err) {
+        assert.include(err.message, 'Must inject bch-js when instantiating this class.')
+      }
+    })
   })
 
   describe('#queryBlockchain', () => {
