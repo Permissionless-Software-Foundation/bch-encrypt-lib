@@ -1,6 +1,6 @@
 {
   "name": "bch-encrypt-lib",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "An npm library for encrypting messages using the Bitcoin protocol.",
   "main": "dist/bch-encrypt-lib.js",
   "scripts": {
