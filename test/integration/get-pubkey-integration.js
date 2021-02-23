@@ -4,6 +4,9 @@
 
 // npm libraries
 const assert = require('chai').assert
+const BCHJS = require('@psf/bch-js')
+
+const bchjs = new BCHJS()
 
 // Unit under test
 const GetPubKeyLib = require('../../lib/get-pubkey')
@@ -11,7 +14,7 @@ let uut
 
 describe('#get-pubkey.js', () => {
   // Refresh the uut before each test.
-  beforeEach(() => (uut = new GetPubKeyLib()))
+  beforeEach(() => (uut = new GetPubKeyLib({ bchjs })))
 
   describe('#queryBlockchain', () => {
     it('should return false if public key could not be found on the blockchain', async () => {
