@@ -6,6 +6,7 @@
 const assert = require('chai').assert
 const sinon = require('sinon')
 const BCHJS = require('@psf/bch-js')
+const bchjs = new BCHJS()
 
 // Mocking data libraries.
 const mockData = require('./mocks/get-pubkey-mocks')
@@ -21,12 +22,8 @@ describe('#get-pubkey.js', () => {
     // Create a new sandbox before each test case.
     sandbox = sinon.createSandbox()
 
-    const config = {
-      bchjs: new BCHJS()
-    }
-
     // Re-instantiate the uut before each test.
-    uut = new GetPubKeyLib(config)
+    uut = new GetPubKeyLib({ bchjs })
   })
 
   // Restore the sandbox before each test.
@@ -34,23 +31,38 @@ describe('#get-pubkey.js', () => {
 
   describe('#constructor', () => {
     it('should accept bch-js passed as a config option', () => {
-      const config = {
-        bchjs: new BCHJS()
-      }
+      const config = { bchjs }
 
       uut = new GetPubKeyLib(config)
 
       assert.property(uut.bchjs, 'restURL')
     })
 
-    it('should throw an error if not passed a bch-js instance', () => {
+    it('should throw an error if no config object is passed', () => {
       try {
         const testUut = new GetPubKeyLib()
 
         assert.fail('Unexpected result')
         console.log('testUut: ', testUut)
       } catch (err) {
-        assert.include(err.message, 'Must inject bch-js when instantiating this class.')
+        assert.include(
+          err.message,
+          'A config object must be passed when instantiating the GetPubKey Class.'
+        )
+      }
+    })
+
+    it('should throw an error if not passed a bch-js instance', () => {
+      try {
+        const testUut = new GetPubKeyLib({})
+
+        assert.fail('Unexpected result')
+        console.log('testUut: ', testUut)
+      } catch (err) {
+        assert.include(
+          err.message,
+          'An instance of bch-js must be passed when instantiating GetPubKey.'
+        )
       }
     })
   })

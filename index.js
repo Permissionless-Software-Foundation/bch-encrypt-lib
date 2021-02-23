@@ -14,21 +14,27 @@
 const GetPubKey = require('./lib/get-pubkey')
 const Encryption = require('./lib/encryption')
 
-let _this // local global for 'this'.
-
 class BchEncryption {
-  constructor (BCHJS) {
-    _this = this
-
-    _this.bchjs = new BCHJS()
-
-    // Create config object to pass to component libraries.
-    const config = {
-      bchjs: _this.bchjs
+  constructor (config) {
+    if (!config) {
+      throw new Error(
+        'A config object must be passed when instantiating the bch-encrypt-lib Class.'
+      )
     }
 
-    _this.getPubKey = new GetPubKey(config)
-    _this.encryption = new Encryption()
+    if (!config.bchjs) {
+      throw new Error(
+        'An instance of bch-js must be passed when instantiating bch-encrypt-lib.'
+      )
+    }
+
+    // Create config object to pass to component libraries.
+    const pubKeyConfig = {
+      bchjs: config.bchjs
+    }
+
+    this.getPubKey = new GetPubKey(pubKeyConfig)
+    this.encryption = new Encryption()
   }
 }
 
