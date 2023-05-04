@@ -2,7 +2,8 @@
   "name": "bch-encrypt-lib",
   "version": "2.0.0",
   "description": "An npm library for encrypting messages using the Bitcoin protocol.",
-  "main": "dist/bch-encrypt-lib.js",
+  "main": "./index.js",
+  "module": "dist/bch-encrypt-lib.js",
   "scripts": {
     "start": "node index.js",
     "test": "TEST=unit nyc mocha test/unit/",
@@ -34,27 +35,22 @@
   },
   "repository": "Permissionless-Software-Foundation/bch-encrypt-lib",
   "dependencies": {
-    "eccrypto-js": "^5.3.0",
-    "wif": "^2.0.6"
+    "eccrypto-js": "5.3.0",
+    "wif": "2.0.6"
   },
   "devDependencies": {
-    "@psf/bch-js": "^4.15.1",
-    "api-doc": "^4.0.3",
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.2",
-    "eslint": "5.16.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-standard": "^4.0.0",
-    "husky": "^4.3.0",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
-    "semantic-release": "^17.3.9",
-    "sinon": "^9.0.2",
-    "standard": "^14.3.1",
-    "tinyify": "^3.0.0"
+    "api-doc": "4.0.3",
+    "browserify": "17.0.0",
+    "chai": "4.1.2",
+    "coveralls": "3.0.2",
+    "husky": "4.3.0",
+    "minimal-slp-wallet": "5.8.9",
+    "mocha": "7.0.1",
+    "nyc": "15.0.0",
+    "semantic-release": "17.3.9",
+    "sinon": "9.0.2",
+    "standard": "14.3.1",
+    "tinyify": "3.0.0"
   },
   "release": {
     "publish": [
@@ -73,5 +69,20 @@
     "ignore": [
       "dist/**"
     ]
+  },
+  "peerDependencies": {
+    "minimal-slp-wallet": ">= 5"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "browser": "./dist/bch-encrypt-lib.js",
+        "node": "./index.js",
+        "default": "./index.js"
+      },
+      "require": {
+        "default": "./index.js"
+      }
+    }
   }
 }
